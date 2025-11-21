@@ -56,11 +56,12 @@ Session data lives in the browser (IndexedDB). Clearing site data or switching b
 - Reorder/delete pages, then click “Download merged PDF”; you should receive a combined file.
 - Stop the dev server and reopen the app to confirm the session persists locally.
 
-## Cloudflare Web Analytics
-- Create a free Cloudflare account and add your site URL (the GitHub Pages URL for this repo).
-- From the Cloudflare Web Analytics setup page, copy your **Beacon token**.
-- Open `index.html` and replace `REPLACE_WITH_YOUR_CF_TOKEN` in the Cloudflare script tag with your token.
-- Deploy (push to `main`) and metrics will appear in the Cloudflare dashboard; the script is light and privacy-friendly.
+## Plausible Analytics (simple JS snippet)
+- Sign up at https://plausible.io (free trial) and click **Add site**.
+- Use your Pages hostname `mhismail3.github.io` (the repo path is fine as a subpath).
+- In the site settings, copy your script snippet; it will include `data-domain="mhismail3.github.io"`.
+- The project already includes the Plausible script tag in `index.html`; adjust `data-domain` if you deploy under a different host.
+- Push to `main` and view metrics in the Plausible dashboard (Traffic → Sources, Pages, Devices). Custom events can be added later if needed.
 
 ## Scripts
 - `npm run lint` – run ESLint across the project.
