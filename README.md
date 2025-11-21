@@ -56,6 +56,12 @@ Session data lives in the browser (IndexedDB). Clearing site data or switching b
 - Reorder/delete pages, then click “Download merged PDF”; you should receive a combined file.
 - Stop the dev server and reopen the app to confirm the session persists locally.
 
+## Cloudflare Web Analytics
+- Create a free Cloudflare account and add your site URL (the GitHub Pages URL for this repo).
+- From the Cloudflare Web Analytics setup page, copy your **Beacon token**.
+- Open `index.html` and replace `REPLACE_WITH_YOUR_CF_TOKEN` in the Cloudflare script tag with your token.
+- Deploy (push to `main`) and metrics will appear in the Cloudflare dashboard; the script is light and privacy-friendly.
+
 ## Scripts
 - `npm run lint` – run ESLint across the project.
 - `npm run dev` – start the dev server.
