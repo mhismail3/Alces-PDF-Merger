@@ -56,12 +56,11 @@ Session data lives in the browser (IndexedDB). Clearing site data or switching b
 - Reorder/delete pages, then click “Download merged PDF”; you should receive a combined file.
 - Stop the dev server and reopen the app to confirm the session persists locally.
 
-## Plausible Analytics (simple JS snippet)
-- Sign up at https://plausible.io (free trial) and click **Add site**.
-- Use your Pages hostname `mhismail3.github.io` (the repo path is fine as a subpath).
-- In the site settings, copy your script snippet; it will include `data-domain="mhismail3.github.io"`.
-- The project already includes the Plausible script tag in `index.html`; adjust `data-domain` if you deploy under a different host.
-- Push to `main` and view metrics in the Plausible dashboard (Traffic → Sources, Pages, Devices). Custom events can be added later if needed.
+## GoatCounter Analytics (lightweight)
+- Sign up at https://www.goatcounter.com and create a site; you’ll pick a subdomain like `yourname.goatcounter.com`.
+- Copy the provided script URL (looks like `https://yourname.goatcounter.com/count`).
+- In `index.html`, replace `REPLACE_WITH_YOUR_SUBDOMAIN` in the GoatCounter script tag with your subdomain and commit/push.
+- Deploy (push to `main`) and view stats at `https://yourname.goatcounter.com`. No DNS or proxy changes are required for GitHub Pages.
 
 ## Scripts
 - `npm run lint` – run ESLint across the project.
