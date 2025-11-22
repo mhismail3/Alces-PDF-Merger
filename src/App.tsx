@@ -69,7 +69,7 @@ const formatBytes = (bytes: number) => {
 }
 
 const SortablePageCard = ({ page, onDelete }: SortableCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({
       id: page.id,
     })
@@ -81,7 +81,7 @@ const SortablePageCard = ({ page, onDelete }: SortableCardProps) => {
 
   return (
     <article
-      className="page-card"
+      className={`page-card${isDragging ? ' dragging' : ''}`}
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -124,8 +124,16 @@ function App() {
   const [hydrated, setHydrated] = useState(false)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const toastTimer = useRef<number | null>(null)
+  const prefersCoarsePointer = useMemo(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(pointer: coarse)').matches
+  }, [])
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(PointerSensor, {
+      activationConstraint: prefersCoarsePointer
+        ? { distance: 6 }
+        : { distance: 5 },
+    }),
   )
 
   const docLookup = useMemo(

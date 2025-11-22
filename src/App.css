@@ -429,6 +429,8 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 .page-card {
@@ -439,12 +441,23 @@ h2 {
   background: #fff;
   box-shadow: var(--shadow-retro);
   cursor: grab;
-  touch-action: pan-y;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
   display: grid;
   grid-template-columns: 86px 1fr auto;
   align-items: center;
   gap: 0.75rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-card.dragging {
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 3px 3px 0px var(--ink);
+  z-index: 2;
 }
 
 .page-card:active {
@@ -470,6 +483,7 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  pointer-events: none;
 }
 
 .page-thumb-fallback {
