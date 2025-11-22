@@ -481,7 +481,7 @@ function App() {
                     </p>
                   </div>
                   <button
-                    className="ghost-button"
+                    className="outline-button"
                     type="button"
                     onClick={() => deleteDoc(doc.id)}
                     aria-label={`Remove ${doc.name}`}
