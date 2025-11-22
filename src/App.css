@@ -388,6 +388,7 @@ h2 {
 }
 
 .export {
+  margin-top: 2rem;
   gap: 1.2rem;
   align-items: flex-end;
 }
@@ -594,8 +595,14 @@ h2 {
     align-items: flex-start;
   }
 
+  .export > div {
+    width: 100%;
+  }
+
   .export .text-input {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .primary.large {
