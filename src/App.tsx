@@ -8,6 +8,7 @@ import {
   useSensors,
   type DragEndEvent,
 } from '@dnd-kit/core'
+import logo from './assets/logo.png'
 import {
   SortableContext,
   arrayMove,
@@ -366,8 +367,15 @@ function App() {
       <div className="grain" />
       <header className="topbar">
         <div>
-          <p className="eyebrow">ALCES.DEV</p>
-          <h1>PDF Merger</h1>
+          <div className="brand-row">
+            <div className="brand-mark">
+              <img src={logo} alt="ALCES.DEV logo" />
+            </div>
+            <div>
+              <p className="eyebrow">ALCES.DEV</p>
+              <h1>PDF Merger</h1>
+            </div>
+          </div>
           <p className="lede">
             Drop PDFs, peek every page, reorder with a drag, trim what you don&apos;t need,
             and export a fresh, perfectly sequenced document. Your session quietly persists
