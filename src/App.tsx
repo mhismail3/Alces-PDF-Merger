@@ -87,7 +87,11 @@ const SortablePageCard = ({ page, onDelete }: SortableCardProps) => {
       {...listeners}
     >
       <div className="page-thumb">
-        <img src={page.thumbnail} alt={`Page ${page.pageNumber}`} />
+        {page.thumbnail ? (
+          <img src={page.thumbnail} alt={`Page ${page.pageNumber}`} />
+        ) : (
+          <div className="page-thumb-fallback">PDF</div>
+        )}
       </div>
       <div className="page-meta">
         <p className="page-label">Page {page.pageNumber}</p>
@@ -115,12 +119,12 @@ function App() {
   const [processing, setProcessing] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const [lastSaved, setLastSaved] = useState<number | null>(null)
-  const [outputName, setOutputName] = useState('moose-pdf-studio')
+  const [outputName, setOutputName] = useState('')
   const [hydrated, setHydrated] = useState(false)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const toastTimer = useRef<number | null>(null)
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   )
 
   const docLookup = useMemo(
@@ -481,7 +485,7 @@ function App() {
                 className="text-input"
                 value={outputName}
                 onChange={(e) => setOutputName(e.target.value)}
-                placeholder="new-document"
+                placeholder="new-title"
               />
             </div>
             <button
