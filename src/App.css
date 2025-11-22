@@ -20,7 +20,8 @@
   /* Retro-Futuristic Design System */
   --radius-sm: 6px;
   --shadow-retro: 4px 4px 0px var(--ink);
-  --border-retro: 2px solid var(--ink);
+  --border-retro: 1.5px solid var(--ink);
+  --border-thick: 2px solid var(--ink);
 
   color: var(--ink);
   background-color: var(--cream);
@@ -50,7 +51,7 @@
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: flex-start;
+  align-items: center; /* Center align vertical content */
   gap: 1.1rem;
   margin-bottom: 1.25rem;
 }
@@ -58,20 +59,21 @@
 .brand-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1.2rem;
   margin-bottom: 0.25rem;
 }
 
 .brand-mark {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(31, 26, 20, 0.1);
-  box-shadow: 0 8px 16px rgba(31, 26, 20, 0.12);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0px var(--ink); /* Retro shadow */
   background: #fff;
   display: grid;
   place-items: center;
+  flex-shrink: 0;
 }
 
 .brand-mark img {
@@ -85,21 +87,22 @@
   text-transform: uppercase;
   font-size: 0.75rem;
   color: var(--aero);
-  margin: 0 0 0.25rem;
+  margin: 0.35rem 0 0.25rem; /* Added top margin to nudge it down */
 }
 
 h1 {
   font-family: 'DM Serif Display', serif;
   font-weight: 700;
-  margin: 0 0 0.5rem;
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  margin: 0;
+  font-size: clamp(3.2rem, 5vw, 4.2rem);
   letter-spacing: 0.01em;
+  line-height: 1;
 }
 
 .lede {
   max-width: 720px;
   color: var(--muted);
-  margin: 0.25rem 0 0;
+  margin: 1rem 0 0;
   font-size: 1.05rem;
 }
 
@@ -111,14 +114,15 @@ h1 {
 }
 
 .pill {
-  background: #ffffff;
+  background: #fff;
   color: var(--ink);
   border: var(--border-retro);
   border-radius: var(--radius-sm);
-  padding: 0.38rem 0.75rem;
+  padding: 0.42rem 0.75rem 0.34rem; /* Added top padding, reduced bottom */
   font-size: 0.88rem;
-  box-shadow: var(--shadow-retro);
+  box-shadow: 2px 2px 0px rgba(31, 26, 20, 0.15);
   font-weight: 600;
+  cursor: default;
 }
 
 .pill.soft {
@@ -197,7 +201,7 @@ h2 {
   color: var(--ink);
   background: #fff;
   border-radius: var(--radius-sm);
-  padding: 0.55rem 1.05rem;
+  padding: 0.6rem 1.05rem 0.5rem; /* Added top padding, reduced bottom */
   box-shadow: var(--shadow-retro);
   font-weight: 600;
 }
@@ -254,7 +258,8 @@ h2 {
 }
 
 .drop-title {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-family: 'DM Serif Display', serif;
   margin: 0.2rem 0;
   font-weight: 600;
 }
@@ -264,11 +269,18 @@ h2 {
   color: var(--muted);
 }
 
+.drop-inner .muted {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
 .primary {
   background: var(--aero);
   color: #fff;
   border: var(--border-retro);
-  padding: 0.8rem 1.2rem;
+  padding: 0.85rem 1.2rem 0.75rem; /* Added top padding, reduced bottom */
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-retro);
   font-weight: 600;
@@ -339,7 +351,7 @@ h2 {
   min-width: 36px;
   border: 2px solid transparent;
   background: rgba(31, 26, 20, 0.04);
-  padding: 0 0.9rem;
+  padding: 0.1rem 0.9rem 0; /* Slight nudge for text buttons */
   border-radius: var(--radius-sm);
   color: var(--ink);
   font-weight: 700;
@@ -348,10 +360,12 @@ h2 {
 .page-card .ghost-button {
   width: 34px;
   height: 34px;
-  padding: 0;
+  padding: 3px 0 0 1px; /* Center X vertically and horizontally manually */
   background: #fff;
-  border: 2px solid var(--ink);
+  border: var(--border-retro);
   box-shadow: 2px 2px 0px var(--ink);
+  font-size: 1.1rem; /* Adjust X size */
+  line-height: 1;
 }
 
 .page-card .ghost-button:hover:not(:disabled) {
@@ -379,7 +393,7 @@ h2 {
   margin-top: 0.3rem;
   border-radius: var(--radius-sm);
   border: var(--border-retro);
-  padding: 0.6rem 0.75rem;
+  padding: 0.65rem 0.75rem 0.55rem; /* Added top padding, reduced bottom */
   width: min(240px, 100%);
   background: #fff;
   font: inherit;
@@ -444,7 +458,7 @@ h2 {
   height: 96px;
   border-radius: 4px;
   overflow: hidden;
-  border: 2px solid var(--ink);
+  border: 1.5px solid var(--ink);
   background: #fff;
   display: flex;
   align-items: center;
