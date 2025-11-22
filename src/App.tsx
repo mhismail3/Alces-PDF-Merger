@@ -277,6 +277,7 @@ function App() {
 
   const handleDrop = (event: DragEvent<HTMLElement>) => {
     event.preventDefault()
+    event.stopPropagation()
     if (processing) return
     if (event.dataTransfer.files?.length) {
       void handleFiles(event.dataTransfer.files)
