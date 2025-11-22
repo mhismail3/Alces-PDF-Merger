@@ -1,4 +1,26 @@
-# Hard-Earned Implementation Rules
+# Documentation Standards
+
+## File Conventions
+* **Location:** `docs/` (Create if missing).
+* **Immutability:** Files are **WRITE-ONCE**. Never edit an existing file.
+* **Updates:** To change/revert logic, create a **NEW** file referencing the old one.
+
+## Naming Syntax
+Format: `YYYY-MM-DD HH-MM-SS - Topic.md`
+* **Input:** System time (often MM/DD/YYYY).
+* **Transformation:** Convert strict Month/Day order.
+    * *Example:* "11/6/2025" (Nov 6th) -> `2025-11-06...`
+
+## Content Requirements
+* **Target Audience:** Future agents reading chronologically.
+* **Update Logs:** If updating/reverting, include a "Diff" explanation and Rationale.
+
+## 4. Context Management
+* **Threshold:** Monitor context window usage.
+* **Trigger:** At **>50%** usage, explicitly suggest creating a new task.
+* **Handoff:** Offer to summarize critical context/decisions for the next session before resetting.
+
+# Developer Rules
 
 Practical fixes and patterns discovered through debugging this project. Favor these over generic advice.
 
