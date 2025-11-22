@@ -594,6 +594,10 @@ h2 {
     align-items: flex-start;
   }
 
+  .export .text-input {
+    width: 100%;
+  }
+
   .primary.large {
     width: 100%;
     text-align: center;
