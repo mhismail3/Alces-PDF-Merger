@@ -130,21 +130,54 @@ Glassmorphic container for main content areas.
 *   Shadow: `2px 2px 0px rgba(31, 26, 20, 0.15)`
 *   Font Size: `0.88rem`
 
-## 6. Layout Patterns
+## 6. Interaction & Animation Physics
+
+The "Tactile" feel is defined by a strict set of physical rules for interaction states. Elements emulate physical depression (z-axis movement) via transform and shadow manipulation.
+
+### The "Press" Model (Buttons)
+Elements start "elevated" by 4px. As the user interacts, the element physically moves down to meet the surface.
+
+| State | Transform (Position) | Shadow (Elevation) | Timing |
+| :--- | :--- | :--- | :--- |
+| **Rest (Idle)** | `none` | `4px 4px 0px` | - |
+| **Hover** | `translate(2px, 2px)` | `2px 2px 0px` | `0.1s ease` |
+| **Active (Click)** | `translate(4px, 4px)` | `none` (0px) | `0.1s ease` |
+
+> **Note:** The `translate` value must exactly match the reduction in shadow size to create the illusion of the object remaining stationary while its height decreases.
+
+### The "Focus" Model (Inputs)
+Inputs act similarly to buttons but stop at the "Hover" depth when focused to indicate readiness without feeling fully "pressed."
+
+*   **Idle:** `4px 4px 0px` Shadow.
+*   **Focus:** `translate(2px, 2px)` + `2px 2px 0px` Shadow.
+
+### Draggable Elements (Cards)
+Interactions for sortable items require specific handling to feel responsive.
+
+1.  **Touch Action:** Apply `touch-action: none` and `user-select: none` to draggable containers to prevent browser scrolling/selection interference.
+2.  **Lift State (`.dragging`):**
+    *   **Transition:** Set to `none`. This is critical for the element to follow the cursor 1:1 without lag.
+    *   **Shadow:** `3px 3px 0px` (Slightly compressed).
+    *   **Z-Index:** Boost to `2` or higher.
+3.  **Release:**
+    *   Restore transition (`transform 0.2s ease`) to allow the element to animate smoothly into its new slot.
+
+### Micro-Interactions (Small Buttons)
+For smaller elements (like "X" delete buttons):
+*   **Scale:** Reduced movement scale (`1px` translation instead of `2px`) to avoid jitteriness.
+*   **Hover:** `translate(1px, 1px)` + `1px 1px 0px` shadow.
+
+## 7. Layout Patterns
 
 *   **App Shell:** Central column with padding.
 *   **Split Layout:** `grid-template-columns: 1.15fr 1.85fr` (Sidebar / Main Area).
 *   **Responsive:** Collapses to single column at `<1100px`.
 *   **Brand Mark:** Circular logo container, white background, `2px` border, `4px` hard shadow.
 
-## 7. Interactive Behaviors
-*   **Hover Effects:** Elements with "Retro Shadow" should physically move (`translate`) towards the shadow direction (down-right) to simulate being pressed, while the shadow shrinks.
-*   **Drag & Drop:** Cards lift up (`z-index`, larger shadow) when dragged.
-
 ## 8. Implementation Checklist for New Agent
 1.  [ ] Import Google Fonts (`DM Serif Display`, `Newsreader`).
 2.  [ ] Define CSS variables (Cream, Ink, Aero, Pine, Clay).
 3.  [ ] Apply global reset (`box-sizing: border-box`).
 4.  [ ] Add the `.grain` background element.
-5.  [ ] Build the `Button` component with the "press" animation logic.
-6.  [ ] Use the large `22px` radius for main containers and `6px` for inner elements.
+5.  [ ] **Implement The Press Model:** Ensure all interactive elements follow the `4px` -> `2px` -> `0px` shadow/transform logic.
+6.  [ ] Set transition timings to `0.1s` for interactions to keep them snappy.
