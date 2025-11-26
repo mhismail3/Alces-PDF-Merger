@@ -552,7 +552,7 @@ function App() {
       <footer className="footer">
         <p className="muted">
           © {new Date().getFullYear()} Built by{' '}
-          <a href="https://github.com/mhismail3" target="_blank" rel="noreferrer">
+          <a href="https://mhismail.com" target="_blank" rel="noreferrer">
             Mohsin Ismail
           </a>
         </p>
