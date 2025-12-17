@@ -8,7 +8,6 @@ import {
   useSensors,
   type DragEndEvent,
 } from '@dnd-kit/core'
-import logo from './assets/logo.png'
 import {
   SortableContext,
   arrayMove,
@@ -58,7 +57,8 @@ type SortableCardProps = {
   onDelete: (id: string) => void
 }
 
-const STORAGE_KEY = 'moose-pdfs-session'
+const STORAGE_KEY = 'pdf-merger-session'
+const THEME_KEY = 'pdf-merger-theme'
 
 const formatBytes = (bytes: number) => {
   if (!bytes) return '0 B'
@@ -122,6 +122,12 @@ function App() {
   const [lastSaved, setLastSaved] = useState<number | null>(null)
   const [outputName, setOutputName] = useState('')
   const [hydrated, setHydrated] = useState(false)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'light'
+    const saved = localStorage.getItem(THEME_KEY)
+    if (saved === 'dark' || saved === 'light') return saved
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const toastTimer = useRef<number | null>(null)
   const prefersCoarsePointer = useMemo(() => {
@@ -176,6 +182,13 @@ function App() {
     }
     void persist()
   }, [docs, pages, hydrated])
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem(THEME_KEY, theme)
+  }, [theme])
+
+  const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'))
 
   const queueToast = (message: string) => {
     if (toastTimer.current) {
@@ -323,7 +336,7 @@ function App() {
       const payload = Uint8Array.from(bytes)
       const blob = new Blob([payload.buffer], { type: 'application/pdf' })
       const link = document.createElement('a')
-      const safeName = (outputName || 'moose-pdf-studio').replace(/\s+/g, '-')
+      const safeName = (outputName || 'merged-document').replace(/\s+/g, '-')
       link.href = URL.createObjectURL(blob)
       link.download = `${safeName}.pdf`
       link.click()
@@ -376,13 +389,16 @@ function App() {
       <header className="topbar">
         <div>
           <div className="brand-row">
-            <div className="brand-mark">
-              <img src={logo} alt="ALCES.DEV logo" />
+            <div className="brand-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
             </div>
-            <div>
-              <p className="eyebrow">ALCES.DEV</p>
-              <h1>PDF Merger</h1>
-            </div>
+            <h1>PDF Merger</h1>
           </div>
           <p className="lede">
             Drop PDFs, peek every page, reorder with a drag, trim what you don&apos;t need,
@@ -390,14 +406,40 @@ function App() {
             in this browser.
           </p>
         </div>
-        <div className="pill-stack">
-          <span className="pill">Session saves locally</span>
-          {lastSaved && (
-            <span className="pill soft">
-              Saved {new Intl.DateTimeFormat('en', { hour: 'numeric', minute: '2-digit' }).format(lastSaved)}
-            </span>
-          )}
-          {processing && <span className="pill busy">Working…</span>}
+        <div className="header-actions">
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            type="button"
+          >
+            {theme === 'light' ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            )}
+          </button>
+          <div className="pill-stack">
+            <span className="pill">Session saves locally</span>
+            {lastSaved && (
+              <span className="pill soft">
+                Saved {new Intl.DateTimeFormat('en', { hour: 'numeric', minute: '2-digit' }).format(lastSaved)}
+              </span>
+            )}
+            {processing && <span className="pill busy">Working…</span>}
+          </div>
         </div>
       </header>
 
